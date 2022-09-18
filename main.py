@@ -1,6 +1,7 @@
 from turtle import Turtle, Screen
 from snake import Snake
 from food import Food
+from score import Scoreboard
 import time
 
 # Setting up the initial background screen of the game
@@ -14,6 +15,7 @@ screen.tracer(0)
 # Creating the snake and food objects from the classes imported
 snake = Snake()
 food = Food()
+score = Scoreboard()
 
 screen.listen()
 
@@ -35,8 +37,13 @@ while game_is_on:
     snake.auto_move()
 
     # Detect when the snake "collects" the food
-    if snake.head.distance(food) < 13:
+    if snake.head.distance(food) < 15:
         food.a_new_piece()
+        score.add_score()
+
+    # Detect the collision with the wall
+    if snake.head.xcor() > 280 or snake.head.ycor() < -280:
+        
 
 
 
