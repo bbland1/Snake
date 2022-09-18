@@ -21,9 +21,11 @@ class Snake:
             snake_part.penup()
             snake_part.goto(snake_start)
             self.snake_segments.append(snake_part)
+    
+    
 
+    # creates the automatic moving of the snake  when the game opens
     def auto_move(self):
-
         for segment in range(len(self.snake_segments) - 1, 0, -1):
             new_x = self.snake_segments[segment - 1].xcor()
             new_y = self.snake_segments[segment - 1].ycor()
