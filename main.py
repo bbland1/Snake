@@ -20,14 +20,15 @@ score = Scoreboard()
 screen.listen()
 
 # Allows user to use the arrow buttons to move the snake the game is listening for key presses
-screen.onkey(snake.up, "Up")
-screen.onkey(snake.down, "Down")
-screen.onkey(snake.right, "Right")
-screen.onkey(snake.left, "Left")
+screen.onkeypress(snake.up, "Up")
+screen.onkeypress(snake.down, "Down")
+screen.onkeypress(snake.right, "Right")
+screen.onkeypress(snake.left, "Left")
 
 # The game code
 
 game_is_on = True
+
 
 while game_is_on:
     # update the screen for the changes to show
@@ -48,10 +49,8 @@ while game_is_on:
         score.game_over()
 
     # Detect the collision of the head with rest of body
-    for segment in snake.segments:
-        if segment == snake.head:
-            pass
-        elif snake.head.distance(segment) < 10:
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) < 10:
             game_is_on = False
             score.game_over()
 
