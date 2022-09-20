@@ -16,42 +16,49 @@ screen.tracer(0)
 snake = Snake()
 food = Food()
 score = Scoreboard()
+game_is_on = True
 
 screen.listen()
+
+def game_done():
+    global game_is_on
+    game_is_on = False
+    score.reset()
+    screen.bye()
+
 
 # Allows user to use the arrow buttons to move the snake the game is listening for key presses
 screen.onkeypress(snake.up, "Up")
 screen.onkeypress(snake.down, "Down")
 screen.onkeypress(snake.right, "Right")
 screen.onkeypress(snake.left, "Left")
+screen.onkeypress(game_done, "e")
 
 # The game code
-
-game_is_on = True
-
-
 while game_is_on:
     # update the screen for the changes to show
     screen.update()
     # A small pause in the update as moves happen
     time.sleep(0.1)
-    snake.auto_move()
+    snake.move()
 
     # Detect when the snake "collects" the food
     if snake.head.distance(food) < 15:
-        food.a_new_piece()
-        snake.extend_snake()
-        score.add_score()
+        food.new_piece()
+        snake.extend()
+        score.add()
 
     # Detect the collision with the wall
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
-        game_is_on = False
-        score.game_over()
+        score.reset()
+        snake.reset()
+        food.reset()
 
     # Detect the collision of the head with rest of body
     for segment in snake.segments[1:]:
         if snake.head.distance(segment) < 10:
-            game_is_on = False
-            score.game_over()
+            score.reset()
+            snake.reset()
+            food.new_piece()
 
 screen.exitonclick()
